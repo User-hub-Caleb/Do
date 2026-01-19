@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Major Colors */
+            --blue: #2952e3;
+            --blue-dark: #1c3bba;
+            --yellow: #facc15;
+            --white: #ffffff;
+            --dark: #0f172a;
+            
+            /* Dimensions */
+            --border-width: 3px;
+            --shadow-offset: 6px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--blue);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        /* --- Header Section --- */
+        header {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--yellow);
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            text-shadow: 4px 4px 0px var(--dark);
+            position: relative;
+        }
+
+        h1::after {
+            content: '.';
+            color: var(--white);
+        }
+
+        /* --- Input Section --- */
+        .input-group {
+            width: 100%;
+            max-width: 600px;
+            background: var(--white);
+            border: var(--border-width) solid var(--dark);
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--dark);
+            padding: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 3rem;
+            transition: transform 0.1s;
+        }
+
+        .input-group:focus-within {
+            transform: translate(-2px, -2px);
+            box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0px var(--dark);
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            border: none;
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: var(--blue);
+            outline: none;
+        }
+
+        input[type="text"]::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+        }
+
+        button#add-btn {
+            background-color: var(--yellow);
+            border: var(--border-width) solid var(--dark);
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0 2rem;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            text-transform: uppercase;
+        }
+
+        button#add-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: none;
+        }
+
+        button#add-btn:hover {
+            background-color: #ffe045;
+        }
+
+        /* --- List Section --- */
+        #task-list {
+            list-style: none;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .task-item {
+            background-color: var(--white);
+            border: var(--border-width) solid var(--dark);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--dark);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: popIn 0.3s ease-out forwards;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .task-item:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: calc(var(--shadow-offset) + 4px) calc(var(--shadow-offset) + 4px) 0px var(--dark);
+        }
+
+        /* Checkbox Styling */
+        .custom-checkbox {
+            width: 32px;
+            height: 32px;
+            border: var(--border-width) solid var(--dark);
+            margin-right: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: white;
+            transition: background 0.2s;
+        }
+
+        .task-item.completed .custom-checkbox {
+            background: var(--blue);
+        }
+
+        .custom-checkbox::after {
+            content: 'L';
+            font-family: arial; /* fast fallback for check shape */
+            color: var(--white);
+            font-weight: 900;
+            font-size: 1.2rem;
+            transform: scaleX(-1) rotate(-45deg);
+            display: none;
+        }
+
+        .task-item.completed .custom-checkbox::after {
+            display: block;
+        }
+
+        /* Task Content */
+        .task-content {
+            flex-grow: 1;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark);
+            word-break: break-word;
+            transition: color 0.2s;
+        }
+
+        .task-item.completed .task-content {
+            text-decoration: line-through;
+            text-decoration-thickness: 3px;
+            text-decoration-color: var(--yellow);
+            color: #94a3b8;
+        }
+
+        /* Delete Button */
+        .delete-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 1rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+            color: #ef4444;
+            font-weight: 900;
+            font-size: 1.5rem;
+        }
+
+        .task-item:hover .delete-btn {
+            opacity: 1;
+        }
+        
+        /* Stats / Filter (Bottom) */
+        .stats {
+            margin-top: 2rem;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        /* Mobile adaptation */
+        @media (max-width: 600px) {
+            h1 { font-size: 3rem; }
+            .delete-btn { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Do</h1>
+    </header>
+
+    <div class="input-group">
+        <input type="text" id="task-input" placeholder="What needs to be done?" autocomplete="off">
+        <button id="add-btn">Add</button>
+    </div>
+
+    <ul id="task-list">
+        </ul>
+
+    <div class="stats" id="stats">
+        0 tasks pending
+    </div>
+
+    <script>
+        // DOM Elements
+        const taskInput = document.getElementById('task-input');
+        const addBtn = document.getElementById('add-btn');
+        const taskList = document.getElementById('task-list');
+        const stats = document.getElementById('stats');
+
+        // State
+        let todos = JSON.parse(localStorage.getItem('do-todos')) || [];
+
+        // Initialize
+        renderTodos();
+
+        // Event Listeners
+        addBtn.addEventListener('click', addTodo);
+        
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTodo();
+        });
+
+        // Functions
+        function addTodo() {
+            const text = taskInput.value.trim();
+            if (text === '') return;
+
+            const newTodo = {
+                id: Date.now(),
+                text: text,
+                completed: false
+            };
+
+            todos.unshift(newTodo); // Add to top
+            saveAndRender();
+            taskInput.value = '';
+            taskInput.focus();
+        }
+
+        function toggleTodo(id) {
+            todos = todos.map(todo => {
+                if (todo.id === id) {
+                    return { ...todo, completed: !todo.completed };
+                }
+                return todo;
+            });
+            // Optional: Move completed to bottom
+            todos.sort((a, b) => a.completed - b.completed);
+            saveAndRender();
+        }
+
+        function deleteTodo(id) {
+            const element = document.getElementById(id);
+            // Animate out
+            element.style.transform = 'scale(0.9)';
+            element.style.opacity = '0';
+            
+            setTimeout(() => {
+                todos = todos.filter(todo => todo.id !== id);
+                saveAndRender();
+            }, 200);
+        }
+
+        function saveAndRender() {
+            localStorage.setItem('do-todos', JSON.stringify(todos));
+            renderTodos();
+        }
+
+        function renderTodos() {
+            taskList.innerHTML = '';
+            
+            todos.forEach(todo => {
+                const li = document.createElement('li');
+                li.className = `task-item ${todo.completed ? 'completed' : ''}`;
+                li.id = todo.id;
+
+                li.innerHTML = `
+                    <div class="custom-checkbox" onclick="toggleTodo(${todo.id})"></div>
+                    <span class="task-content">${escapeHtml(todo.text)}</span>
+                    <button class="delete-btn" onclick="deleteTodo(${todo.id})">×</button>
+                `;
+                
+                taskList.appendChild(li);
+            });
+
+            updateStats();
+        }
+
+        function updateStats() {
+            const pending = todos.filter(t => !t.completed).length;
+            stats.innerText = `${pending} task${pending !== 1 ? 's' : ''} pending`;
+        }
+
+        // Security helper
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
