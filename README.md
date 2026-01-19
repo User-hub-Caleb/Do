@@ -1,12 +1,10 @@
 # Do.
-
 **Do.** is a single-page task management application featuring a high-contrast, Neo-Brutalist design aesthetic. It abandons modern gradients for raw, solid colors and tactile interactions, prioritizing clarity and focus.
 
 ![Project Status](https://img.shields.io/badge/status-active-facc15?style=flat-square&labelColor=0f172a&color=2952e3)
 ![License](https://img.shields.io/badge/license-MIT-facc15?style=flat-square&labelColor=0f172a&color=2952e3)
 
 ## ✨ Features
-
 * **Neo-Brutalist UI:** A bold "Blue & Yellow" theme with hard edges, heavy borders, and deep drop shadows. No gradients.
 * **Zero Dependencies:** Built entirely with vanilla HTML, CSS, and JavaScript. No frameworks or libraries required.
 * **Local Persistence:** Uses the browser's `localStorage` API to save tasks automatically. Your list remains even after refreshing or closing the browser.
@@ -38,10 +36,5 @@ The design logic is centralized in the CSS `:root` variables for easy modificati
 * **Cyber Yellow:** `#facc15` (Accents/Highlights)
 * **Dark Slate:** `#0f172a` (Borders/Text)
 * **Typography:** 'Space Grotesk' (via Google Fonts)
-
-## 📂 Project Structure
-
-```text
-/
 ├── index.html      # Contains all markup, styles, and logic
 └── README.md       # Documentation
